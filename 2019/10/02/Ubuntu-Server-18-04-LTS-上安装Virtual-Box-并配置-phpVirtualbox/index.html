@@ -1,0 +1,316 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="zh-Hans"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="ubuntu,linux,"><meta name="description" content="本教程将指导你在 Ubuntu 18.04 LTS 无头服务器上，一步一步地安装 Oracle VirtualBox。同时，本教程也将介绍如何使用 phpVirtualBox 去管理安装在无头服务器上的 VirtualBox 实例。phpVirtualBox 是 VirtualBox 的一个基于 Web 的前端工具。这个教程也可以工作在 Debian 和其它 Ubuntu 衍生版本上，如 Linu"><meta name="keywords" content="ubuntu,linux"><meta property="og:type" content="article"><meta property="og:title" content="Ubuntu Server 18.04 LTS 上安装Virtual Box 并配置 phpVirtualbox"><meta property="og:url" content="https://syaofox.github.io/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/index.html"><meta property="og:site_name" content="Syaofox&#39;s Land"><meta property="og:description" content="本教程将指导你在 Ubuntu 18.04 LTS 无头服务器上，一步一步地安装 Oracle VirtualBox。同时，本教程也将介绍如何使用 phpVirtualBox 去管理安装在无头服务器上的 VirtualBox 实例。phpVirtualBox 是 VirtualBox 的一个基于 Web 的前端工具。这个教程也可以工作在 Debian 和其它 Ubuntu 衍生版本上，如 Linu"><meta property="og:locale" content="zh-Hans"><meta property="og:image" content="https://syaofox.github.io/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-f01981db6c2a7a8ebd570be6bd8c9cd4.jpg"><meta property="og:image" content="https://syaofox.github.io/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-5b04cc0622b3f4fb4baeb57ae8b58d5c.jpg"><meta property="og:image" content="https://syaofox.github.io/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-3ce8a883400e9fcd3f6fa384ef7e3e31.jpg"><meta property="og:image" content="https://syaofox.github.io/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-c62af7eb570debbf041cfbf6d49a2024.jpg"><meta property="og:image" content="https://syaofox.github.io/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-7486525747b84f6a739e24057931d1fd.jpg"><meta property="og:updated_time" content="2019-10-02T06:57:07.491Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Ubuntu Server 18.04 LTS 上安装Virtual Box 并配置 phpVirtualbox"><meta name="twitter:description" content="本教程将指导你在 Ubuntu 18.04 LTS 无头服务器上，一步一步地安装 Oracle VirtualBox。同时，本教程也将介绍如何使用 phpVirtualBox 去管理安装在无头服务器上的 VirtualBox 实例。phpVirtualBox 是 VirtualBox 的一个基于 Web 的前端工具。这个教程也可以工作在 Debian 和其它 Ubuntu 衍生版本上，如 Linu"><meta name="twitter:image" content="https://syaofox.github.io/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-f01981db6c2a7a8ebd570be6bd8c9cd4.jpg"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="https://syaofox.github.io/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/"><title>Ubuntu Server 18.04 LTS 上安装Virtual Box 并配置 phpVirtualbox | Syaofox's Land</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">Syaofox's Land</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br> 分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br> 归档</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br> 搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="https://syaofox.github.io/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="Syaofox"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Syaofox's Land"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Ubuntu Server 18.04 LTS 上安装Virtual Box 并配置 phpVirtualbox</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-02T14:25:16+08:00">2019-10-02</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span></span> <span class="post-meta-divider">|</span><span class="page-pv"><i class="fa fa-file-o"></i> 浏览<span class="busuanzi-value" id="busuanzi_value_page_pv"></span> 次</span></div></header><div class="post-body" itemprop="articleBody"><p><em>本教程将指导你在 Ubuntu 18.04 LTS 无头服务器上，一步一步地安装 Oracle VirtualBox。同时，本教程也将介绍如何使用 phpVirtualBox 去管理安装在无头服务器上的 VirtualBox 实例。phpVirtualBox 是 VirtualBox 的一个基于 Web 的前端工具。这个教程也可以工作在 Debian 和其它 Ubuntu 衍生版本上，如 Linux Mint。现在，我们开始。</em><br>原文地址:<a href="https://www.ostechnix.com/install-oracle-virtualbox-ubuntu-16-04-headless-server/" target="_blank" rel="noopener">https://www.ostechnix.com/install-oracle-virtualbox-ubuntu-16-04-headless-server/</a></p><a id="more"></a><h1 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h1><p>在安装 Oracle VirtualBox 之前，我们的 Ubuntu 18.04 LTS 服务器上需要满足如下的前提条件。<br>首先，逐个运行如下的命令来更新 Ubuntu 服务器。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br><span class="line">sudo apt dist-upgrade</span><br></pre></td></tr></table></figure><p>接下来，安装如下的必需的包</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install build-essential dkms unzip wget</span><br></pre></td></tr></table></figure><p>安装完成所有的更新和必需的包之后，重启动 Ubuntu 服务器。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure><h1 id="安装-VirtualBox"><a href="#安装-VirtualBox" class="headerlink" title="安装 VirtualBox"></a>安装 VirtualBox</h1><p>添加 Oracle VirtualBox 官方仓库。为此你需要去编辑 <code>/etc/apt/sources.list</code> 文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/apt/sources.list</span><br></pre></td></tr></table></figure><p>添加下列的行</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb http://download.virtualbox.org/virtualbox/debian bionic contrib</span><br></pre></td></tr></table></figure> <img src="/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-f01981db6c2a7a8ebd570be6bd8c9cd4.jpg"><p>然后，运行下列的命令去添加 Oracle 公钥：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget  -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -</span><br></pre></td></tr></table></figure><p>接下来，使用如下的命令去更新软件源</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure><p>最后，使用如下的命令去安装最新版本的 Oracle VirtualBox</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install virtualbox-5.2</span><br></pre></td></tr></table></figure><p>添加用户到 VirtualBox 组</p><p>我们需要去创建并添加我们的系统用户到 <code>vboxusers</code> 组中。你也可以单独创建用户，然后将它分配到 <code>vboxusers</code> 组中，也可以使用已有的用户。我不想去创建新用户，因此，我添加已存在的用户到这个组中。请注意，如果你为 virtualbox 使用一个单独的用户，那么你必须注销当前用户，并使用那个特定的用户去登入，来完成剩余的步骤。</p><p>我使用的是我的用户名 <code>sk</code>，因此，我运行如下的命令将它添加到 <code>vboxusers</code> 组中。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -aG vboxusers sk</span><br></pre></td></tr></table></figure><p>现在，运行如下的命令去检查 virtualbox 内核模块是否已加载。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo  systemctl status vboxdrv</span><br></pre></td></tr></table></figure> <img src="/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-5b04cc0622b3f4fb4baeb57ae8b58d5c.jpg"><p>如果 virtualbox 模块没有启动，运行如下的命令去启动它。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/vboxdrv setup</span><br></pre></td></tr></table></figure><p>很好！我们已经成功安装了 VirtualBox 并启动了 virtualbox 模块。现在，我们继续来安装 Oracle VirtualBox 的扩展包。</p><p>安装 VirtualBox 扩展包</p><p>VirtualBox 扩展包为 VirtualBox 访客系统提供了如下的功能。</p><ul><li>虚拟的 USB 2.0 (EHCI) 驱动</li><li>VirtualBox 远程桌面协议（VRDP）支持</li><li>宿主机网络摄像头直通</li><li>Intel PXE 引导 ROM</li><li>对 Linux 宿主机上的 PCI 直通提供支持</li></ul><p>从<a href="https://www.virtualbox.org/wiki/Download_Old_Builds_5_2" target="_blank" rel="noopener">这里</a>为 VirtualBox 5.2.x 下载最新版的扩展包。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.virtualbox.org/virtualbox/5.2.14/Oracle_VM_VirtualBox_Extension_Pack-5.2.14.vbox-extpack</span><br></pre></td></tr></table></figure><p>使用如下的命令去安装扩展包：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo  VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-5.2.14.vbox-extpack</span><br></pre></td></tr></table></figure><p>恭喜！我们已经成功地在 Ubuntu 18.04 LTS 服务器上安装了 Oracle VirtualBox 的扩展包。现在已经可以去部署虚拟机了。参考 <a href="http://www.virtualbox.org/manual/ch08.html" target="_blank" rel="noopener">virtualbox 官方指南</a>，在命令行中开始创建和管理虚拟机。</p><p>然而，并不是每个人都擅长使用命令行。有些人可能希望在图形界面中去创建和使用虚拟机。不用担心！下面我们为你带来非常好用的 phpVirtualBox 工具！</p><h1 id="关于-phpVirtualBox"><a href="#关于-phpVirtualBox" class="headerlink" title="关于 phpVirtualBox"></a>关于 phpVirtualBox</h1><p>phpVirtualBox 是一个免费的、基于 web 的 Oracle VirtualBox 后端。它是使用 PHP 开发的。用 phpVirtualBox 我们可以通过 web 浏览器从网络上的任意一个系统上，很轻松地创建、删除、管理、和执行虚拟机。</p><h1 id="在-Ubuntu-18-04-LTS-上安装-phpVirtualBox"><a href="#在-Ubuntu-18-04-LTS-上安装-phpVirtualBox" class="headerlink" title="在 Ubuntu 18.04 LTS 上安装 phpVirtualBox"></a>在 Ubuntu 18.04 LTS 上安装 phpVirtualBox</h1><p>由于它是基于 web 的工具，我们需要安装 Apache web 服务器、PHP 和一些 php 模块。</p><p>为此，运行如下命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install apache2 php php-mysql libapache2-mod-php php-soap php-xml</span><br></pre></td></tr></table></figure><p>然后，从 <a href="https://github.com/phpvirtualbox/phpvirtualbox/releases" target="_blank" rel="noopener">下载页面</a> 上下载 phpVirtualBox 5.2.x 版。请注意，由于我们已经安装了 VirtualBox 5.2 版，因此，同样的我们必须去安装 phpVirtualBox 的 5.2 版本。</p><p>运行如下的命令去下载它：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/phpvirtualbox/phpvirtualbox/archive/5.2-0.zip</span><br></pre></td></tr></table></figure><p>使用如下命令解压下载的安装包：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip 5.2-0.zip</span><br></pre></td></tr></table></figure><p>这个命令将解压 5.2.0.zip 文件的内容到一个名为 <code>phpvirtualbox-5.2-0</code> 的文件夹中。现在，复制或移动这个文件夹的内容到你的 apache web 服务器的根文件夹中。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo  mv phpvirtualbox-5.2-0/ /var/www/html/phpvirtualbox</span><br></pre></td></tr></table></figure><p>给 phpvirtualbox 文件夹分配适当的权限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo  chmod  777  /var/www/html/phpvirtualbox/</span><br></pre></td></tr></table></figure><p>接下来，我们开始配置 phpVirtualBox。</p><p>像下面这样复制示例配置文件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo  cp  /var/www/html/phpvirtualbox/config.php-example /var/www/html/phpvirtualbox/config.php</span><br></pre></td></tr></table></figure><p>编辑 phpVirtualBox 的 <code>config.php</code> 文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo  nano  /var/www/html/phpvirtualbox/config.php</span><br></pre></td></tr></table></figure><p>找到下列行，并且用你的系统用户名和密码去替换它（就是前面的“添加用户到 VirtualBox 组中”节中使用的用户名）。</p><p>在我的案例中，我的 Ubuntu 系统用户名是 <code>sk</code> ，它的密码是 <code>ubuntu</code>。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var <span class="variable">$username</span> =  <span class="string">'sk'</span>;</span><br><span class="line">var <span class="variable">$password</span> =  <span class="string">'ubuntu'</span>;</span><br></pre></td></tr></table></figure> <img src="/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-3ce8a883400e9fcd3f6fa384ef7e3e31.jpg"><p>保存并关闭这个文件。<br>接下来，创建一个名为 <code>/etc/default/virtualbox</code> 的新文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo  nano  /etc/default/virtualbox</span><br></pre></td></tr></table></figure><p>添加下列行。用你自己的系统用户替换 <code>sk</code>。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VBOXWEB_USER=sk</span><br></pre></td></tr></table></figure><p>最后，重引导你的系统或重启下列服务去完成整个配置工作。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo  systemctl restart vboxweb-service</span><br><span class="line">sudo  systemctl restart vboxdrv</span><br><span class="line">sudo  systemctl restart apache2</span><br></pre></td></tr></table></figure><p>调整防火墙允许连接 Apache web 服务器</p><p>如果你在 Ubuntu 18.04 LTS 上启用了 UFW，那么在默认情况下，apache web 服务器是不能被任何远程系统访问的。你必须通过下列的步骤让 http 和 https 流量允许通过 UFW。</p><p>首先，我们使用如下的命令来查看在策略中已经安装了哪些应用：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw app list</span><br><span class="line">Available applications:</span><br><span class="line">Apache</span><br><span class="line">Apache  Full</span><br><span class="line">Apache  Secure</span><br><span class="line">OpenSSH</span><br></pre></td></tr></table></figure><p>正如你所见，Apache 和 OpenSSH 应该已经在 UFW 的策略文件中安装了。</p><p>如果你在策略中看到的是 <code>Apache Full</code>，说明它允许流量到达 80 和 443 端口：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw app info  <span class="string">"Apache Full</span></span><br><span class="line"><span class="string">Profile:  Apache  Full</span></span><br><span class="line"><span class="string">Title:  Web  Server  (HTTP,HTTPS)</span></span><br><span class="line"><span class="string">Description:  Apache v2 is the next generation of the omnipresent Apache web</span></span><br><span class="line"><span class="string">server.</span></span><br><span class="line"><span class="string">Ports:</span></span><br><span class="line"><span class="string">80,443/tcp</span></span><br></pre></td></tr></table></figure><p>现在，运行如下的命令去启用这个策略中的 HTTP 和 HTTPS 的入站流量：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw allow <span class="keyword">in</span>  <span class="string">"Apache Full"</span></span><br><span class="line">Rules updated</span><br><span class="line">Rules updated (v6)</span><br></pre></td></tr></table></figure><p>如果你希望允许 https 流量，但是仅是 http (80) 的流量，运行如下的命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw app info  <span class="string">"Apache</span></span><br></pre></td></tr></table></figure><p>访问 phpVirtualBox 的 Web 控制台</p><p>现在，用任意一台远程系统的 web 浏览器来访问。<br>在地址栏中，输入：<code>http://IP-address-of-virtualbox-headless-server/phpvirtualbox</code>。<br>在我的案例中，我导航到这个链接 – <code>http://192.168.225.22/phpvirtualbox</code>。<br>你将看到如下的屏幕输出。输入 phpVirtualBox 管理员用户凭据。<br>phpVirtualBox 的默认管理员用户名和密码是 <code>admin</code> / <code>admin</code>。</p> <img src="/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-c62af7eb570debbf041cfbf6d49a2024.jpg"><p>恭喜！你现在已经进入了 phpVirtualBox 管理面板了。</p> <img src="/2019/10/02/Ubuntu-Server-18-04-LTS-上安装Virtual-Box-并配置-phpVirtualbox/1569939778-7486525747b84f6a739e24057931d1fd.jpg"><p>现在，你可以从 phpvirtualbox 的管理面板上，开始去创建你的 VM 了。正如我在前面提到的，你可以从同一网络上的任意一台系统上访问 phpVirtualBox 了，而所需要的仅仅是一个 web 浏览器和 phpVirtualBox 的用户名和密码。</p><p>如果在你的宿主机系统（不是访客机）的 BIOS 中没有启用虚拟化支持，phpVirtualBox 将只允许你去创建 32 位的访客系统。要安装 64 位的访客系统，你必须在你的宿主机的 BIOS 中启用虚拟化支持。在你的宿主机的 BIOS 中你可以找到一些类似于 “virtualization” 或 “hypervisor” 字眼的选项，然后确保它是启用的。</p></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>你的支持将鼓励我继续创造！</div> <button id="rewardButton" disable="enable" onclick='var qr=document.getElementById("QR");"none"===qr.style.display?qr.style.display="block":qr.style.display="none"'> <span>打赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"> <img id="wechat_qr" src="/images/wechatpay.png" alt="Syaofox 微信支付"><p>微信支付</p></div><div id="alipay" style="display:inline-block"> <img id="alipay_qr" src="/images/alipay.png" alt="Syaofox 支付宝"><p>支付宝</p></div></div></div></div><footer class="post-footer"><div class="post-tags"> <a href="/tags/ubuntu/" rel="tag"># ubuntu</a> <a href="/tags/linux/" rel="tag"># linux</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/09/28/ubuntu上安装docker和docker-compose/" rel="next" title="Ubuntu 18.04上安装docker和docker-compose"><i class="fa fa-chevron-left"></i> Ubuntu 18.04上安装docker和docker-compose</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"></div></div></footer></div></article><div class="post-spread"></div></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">Syaofox</p><p class="site-description motion-element" itemprop="description"></p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives/"><span class="site-state-item-count">22</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">7</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">标签</span></a></div></nav></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前提条件"><span class="nav-number">1.</span> <span class="nav-text">前提条件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-VirtualBox"><span class="nav-number">2.</span> <span class="nav-text">安装 VirtualBox</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于-phpVirtualBox"><span class="nav-number">3.</span> <span class="nav-text">关于 phpVirtualBox</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在-Ubuntu-18-04-LTS-上安装-phpVirtualBox"><span class="nav-number">4.</span> <span class="nav-text">在 Ubuntu 18.04 LTS 上安装 phpVirtualBox</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">Syaofox</span></div><div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div> <span class="post-meta-divider">|</span><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div><div class="busuanzi-count"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span class="site-uv"><i class="fa fa-user"></i> 访问<span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span><span class="site-pv"><i class="fa fa-eye"></i> 总访问<span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次</span></div></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script></body></html>
